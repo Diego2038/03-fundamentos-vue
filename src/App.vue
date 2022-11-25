@@ -1,19 +1,24 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <Indecision />
+  <!-- <img alt="Vue logo" src="./assets/logo.png">  -->
+  <!-- <Counter mensajito="Saludos invocador" :start="103"  />  -->
+  <!--  <Counter mensajito="Saludos invocador"\></Counter>  Es equivalente, además se pone el : por el v-bind, de esta forma el parámetro pasa como expresión de JS--> 
+  <!-- <HelloWorld pepe="xdd"></HelloWorld> -->
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
-
+<script> 
+import Counter from './components/Counter.vue';
+import Indecision from './components/Indecision.vue';
+// import HelloWorld from './components/HelloWorld.vue';
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  name: 'App', 
+  components : {
+    Indecision,
+    Counter,
+    // HelloWorld
   }
 }
 </script>
-
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
