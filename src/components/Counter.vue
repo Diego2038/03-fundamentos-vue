@@ -2,9 +2,10 @@
   <!-- <h2>{{mensajito || 'Titulo por defecto'}}</h2> Es lo mismo que abajo -->
   <h2>{{customTitle}}</h2>
   <p> {{ counter }}<sup>2</sup> = {{ computedElevado}}</p> <!-- OJO: con computed sólo puedes invocarlos sin parámetros de entrada--> 
-  <div>
+  <p data-testid="counter">{{ counter }}</p>
+  <div class="mb-1">
     <button @click="aumentarCounter">Aumentar</button>
-    <button @click="disminuirCounter">Disminuir</button>
+    <button data-testidxd="btn_disminuir"   @click="disminuirCounter">Disminuir</button>
   </div> 
 </template>
 
@@ -43,12 +44,13 @@ export default {
   },
   computed : { // OJO las propiedades computadas son mejores que los métodos, porque la operación se almacena en el caché
     computedElevado() {
-      console.log('elevado computed')
+      //console.log('elevado computed')
       return this.counter * this.counter
     },
     customTitle() {
-      if( !this.mensajito) return 'Mensaje por defecto'
-      else return this.mensajito
+      // if( !this.mensajito) return 'Counter'
+      // else return this.mensajito
+      return this.mensajito || 'Counter!'
     }
   }
   

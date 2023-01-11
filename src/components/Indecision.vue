@@ -1,6 +1,6 @@
 <template>
   <h1>Indecision app</h1>
-  <img src="" alt="bg">
+  <img :src="img" alt="bg" v-if="img">
   <div class="bg-dark"></div>
 
   <div class="indecision-container">
@@ -9,8 +9,8 @@
     <p>Recuerda terminar con el signo (?)</p>
 
     <div>
-      <h2> {{question}} </h2>
-      <h1> {{answer}} </h1>
+      <h2 v-if="validarPregunta(question)"> {{question}} </h2>
+      <h1 v-if="answer"> {{ traducirRespuesta }} </h1>
     </div>
   </div>
 </template>
@@ -20,33 +20,49 @@ export default {
   name: 'Indecision',
   data() {
     return {
-      question : null,
+      question : "",
       answer : null,  
+      img : null
     }
   },
   methods : {
     printQuestion(){
       console.log( this.question )
     },
-    async getAnswer(){
-      let imagenFondo = document.querySelector('img')
-      this.answer = 'Pensando...'
-      console.log( imagenFondo)
-      const {answer, image} = await fetch('https://yesno.wtf/api')
-        .then( r => r.json()) 
-      imagenFondo.src = image
-      this.answer = answer
-      //console.log( data )
-      return answer
+    async getAnswer(){ 
+      try {
+        this.answer = 'Pensando...' 
+        const {answer, image} = await fetch('https://yesno.wtf/api')
+         .then( r => r.json())  
+       this.img = image
+        this.answer = answer 
+        //console.log( data ) 
+    } catch( err ){
+        console.log( 'Indecision Component:', err )
+        this.answer = 'No se pudo cargar del API'
+        this.img = null
+    }
+    },
+    validarPregunta( palabra ) {
+      //return palabra.slice( palabra.length ) === '?'
+      return palabra.includes('?')
     }
   },
   watch : {
     question( value, oldValue ){
-      //console.log({ value, oldValue })
+      console.log({ value })
       if ( !value.includes('?')) return
       // TODO: Realizar petición
-      console.log( value )
+      
       this.getAnswer()
+    }
+  },
+  computed : {
+    traducirRespuesta () {
+      if ( this.answer === 'yes') return 'Sí'
+      else if ( this.answer === 'no' ) return 'Nope'
+      else if ( this.answer === 'maybe' ) return 'Podría ser'
+      else return null
     }
   }
 }
