@@ -50,7 +50,7 @@ export default {
   },
   watch : {
     question( value, oldValue ){
-      console.log({ value })
+      console.log({ value, oldValue })
       if ( !value.includes('?')) return
       // TODO: Realizar petición
       
